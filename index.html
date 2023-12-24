@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>多屏播放</title>
-    <script src="cxplayer.js"></script>
+    <script src="hjplayer.js"></script>
     <style>
 		*{
 			margin: 0;
@@ -134,7 +134,7 @@
     purl[5]="wss://down.cxtv.win:2096/live/5-1.live.flv";
     purl[6]="wss://down.cxtv.win:2096/live/6-1.live.flv";
     purl[7]="wss://down.cxtv.win:2096/live/7-1.live.flv";
-    function palayvideo(){
+    function playvideo(){
         for (i=1;i<=7;i++) {
             if (i==4) {i=5}
             player = "player" + i;
@@ -152,11 +152,10 @@
     }
 
     callbackfun = function (e){ 
-        console.log(e);
+        // console.log(e);
+        // console.log(player);
     }
     
-    palayvideo();
-    setInterval(palayvideo, 12000);
     
     window.addEventListener('resize', function() {
         setpage()
@@ -173,6 +172,9 @@
         document.getElementsByTagName("td")[5].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
     }
     setpage()
+    
+    playvideo();
+    setInterval(playvideo, 120000);
 
 </script>
 </body>
