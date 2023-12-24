@@ -1,0 +1,179 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多屏播放</title>
+    <script src="hjplayer.js"></script>
+    <style>
+		*{
+			margin: 0;
+			padding: 0;
+			text-align:center;
+		}
+		body{text-align:center;
+		    background-color: black;
+			}
+		.divbg{top:0;left: 0; text-align:center;overflow:visible;}
+		.player{color: black; position: relative; width: 100%; height: 100%; overflow: hidden;z-index: 1;}
+		#dzpklogo{
+		    width: 100%;
+		    height: 18%;
+		    position: relative;
+		    padding: 5px;
+		    display: none;
+		    z-index: 2;
+		    -webkit-background-size: cover !important;
+            -moz-background-size: cover !important;
+            -o-background-size: cover !important;
+		    background-size: cover !important;
+		}
+		#dzpkimage{
+		    bottom: 0;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+            width:auto;
+            height:auto;
+		}
+		#butt{
+		    display:none;
+		    z-index: 9999;
+		    position: fixed ! important;
+		    right: 20px;
+		    top: 0px;
+		}
+		#butt-m{
+		    display:none;
+		    z-index: 9999;
+		    position: fixed ! important;
+		    right: 10px;
+		    top: 0px;
+		}
+		.butt{
+		    font-size:20;
+		    width:100px;
+		    height:50px;
+		    text-shadow: 0 1px 0 #484f58;
+		    background-color: #A5DE37;
+		    border-color: #A5DE37;
+		    font-weight: 300;
+		    border-radius:15px;
+		    margin: 3;
+		}
+		
+		.menu{width:auto; margin:10px auto;}
+        .menu ul {
+            list-style: none;
+        }
+        .menu ul li {
+            float:left;
+            position:relative;
+        }
+        .menu ul li a, .menu ul li a:visited {
+            display:block;
+            text-align:center;
+            text-decoration:none;
+            width:90px;
+            height:30px;
+            color:#000;
+            border:1px solid #fff;
+            border-width:1px 1px 0 0;
+            background:#c9c9a7;
+            line-height:30px;
+            font-size:12px;
+        }
+        .menu ul li ul {
+            display: none;
+        }
+        .menu ul li:hover a {
+            color:#fff;
+            background:#b3ab79;
+        }
+        .menu ul li:hover ul {
+            display:block;
+            position:absolute;
+            top:35px;
+            left:3;
+            width:100px;
+        }
+        .menu ul li:hover ul li a {
+            display:block;
+            background:#faeec7;
+            color:#000;
+        }
+        .menu ul li:hover ul li a:hover {
+            background:#dfc184;
+            color:#000;
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    <div class="divbg">
+        <table><tbody>
+            <tr>
+                <td><div id="nPlayer1" class="player"></div></td>
+                <td><div id="nPlayer2" class="player"></div></td>
+                <td><div id="nPlayer3" class="player"></div></td>
+            </tr>
+            <tr>
+                <td><div id="nPlayer5" class="player"></div></td>
+                <td><div id="nPlayer6" class="player"></div></td>
+                <td><div id="nPlayer7" class="player"></div></td>
+            </tr>
+        </tbody></table>
+    </div>
+
+<script type="text/javascript">
+    var purl=[];
+    purl[1]="wss://down.cxtv.win:2096/live/1-1.live.flv";
+    purl[2]="wss://down.cxtv.win:2096/live/2-1.live.flv";
+    purl[3]="wss://down.cxtv.win:2096/live/3-1.live.flv";
+    purl[5]="wss://down.cxtv.win:2096/live/5-1.live.flv";
+    purl[6]="wss://down.cxtv.win:2096/live/6-1.live.flv";
+    purl[7]="wss://down.cxtv.win:2096/live/7-1.live.flv";
+    function palayvideo(){
+        for (i=1;i<=7;i++) {
+            if (i==4) {i=5}
+            player = "player" + i;
+            PlayerDiv = "nPlayer" +i;
+            player = new WasmPlayer(purl[i], PlayerDiv, callbackfun,{
+                width:true,
+                Height:true,
+            })
+            player.play(purl[i],1);
+            if (player == undefined){
+                // player.stop();
+                document.getElementById(PlayerDiv).innerHTML = "";
+            }
+        }
+    }
+
+    callbackfun = function (e){ 
+        console.log(e);
+    }
+    
+    palayvideo();
+    setInterval(palayvideo, 12000);
+    
+    window.addEventListener('resize', function() {
+        setpage()
+    });
+    
+    function setpage() {
+    	var xwidth = document.documentElement.clientWidth-3;
+    	var xheight = document.documentElement.clientHeight-15;
+        document.getElementsByTagName("td")[0].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+        document.getElementsByTagName("td")[1].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+        document.getElementsByTagName("td")[2].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+        document.getElementsByTagName("td")[3].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+        document.getElementsByTagName("td")[4].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+        document.getElementsByTagName("td")[5].setAttribute("style","width:"+xwidth/3+";Height:"+xheight/2+";border-width:1;border-style:inset;")
+    }
+    setpage()
+
+</script>
+</body>
+</html>
